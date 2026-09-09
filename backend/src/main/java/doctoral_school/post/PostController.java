@@ -1,6 +1,7 @@
 package doctoral_school.post;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +22,8 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @GetMapping
-    public Post getPostById(Long id){
+    @GetMapping("/{id}")
+    public Post getPostById(@PathVariable Long id){
         return postService.getPostById(id);
     }
 }
