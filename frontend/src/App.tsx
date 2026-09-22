@@ -1,40 +1,30 @@
-import { useEffect, useState} from 'react';
-import { fetchCategories } from './api/categoryApi';
-import type { PostCategory } from './types/category';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Header } from './components/layout/Header';
+import { Sidebar } from './components/layout/Sidebar';
+import { HomePage } from './pages/HomePage';
+import { OfferHelpPage } from './pages/OfferHelpPage';
+import { SeekHelpPage } from './pages/SeekHelpPage';
+import { CollaborationPage } from './pages/CollaborationPage';
 
 function App() {
-  const [categories, setCategories] = useState<PostCategory[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchCategories()
-      .then((data) => {
-        setCategories(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Načítám kategorie...</p>;
-  if (error)  return <p style={{color:'red'}}>Chyba: {error}</p>;
-
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Doktorská Škola</h1>
-      <h2>Seznam kategorií:</h2>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.postCategoryId}>
-            {category.name} {category.isDefault ? '(Výchozí)' : ''}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <BrowserRouter>
+      <div className="app-container">
+        <Header />
+        <div className="app-body">
+          <Sidebar />
+          <main className="app-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/nabidka-pomoci" element={<OfferHelpPage />} />
+              <Route path="/poptavka-pomoci" element={<SeekHelpPage />} />
+              <Route path="/nabidka-spoluprace" element={<CollaborationPage />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
-export default App
+export default App;
