@@ -19,16 +19,18 @@
   color: #334155;
   font-weight: 500;
   font-size: 0.95rem;
-  border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
 }
 
 .sidebar-link:hover {
   background-color: #e2e8f0;
+  text-decoration: underline;
   color: #0f172a;
 }
 
 .sidebar-link.active {
-  background-color: #002b49;
-  color: #ffffff;
+  background-color: #e2e8f0;
+  border: 1px solid;
+  text-decoration: underline;
+  font-weight: bold;
 }

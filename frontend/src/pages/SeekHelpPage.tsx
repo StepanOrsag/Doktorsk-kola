@@ -1,8 +1,10 @@
 import { usePosts } from '../hooks/usePosts';
-import { PostCard } from '../features/posts/PostCard';
+import { PostList } from '../features/posts/PostList';
+import { useNavigate } from 'react-router-dom';
 
 export function SeekHelpPage() {
   const { posts: allPosts, loading, error } = usePosts();
+  const navigate = useNavigate();
 
   const seekHelpPosts = allPosts.filter((post) => post.postType === 'SEEKHELP');
 
@@ -10,19 +12,17 @@ export function SeekHelpPage() {
   if (error) return <p style={{ color: 'red', textAlign: 'center' }}>Chyba: {error}</p>;
 
   return (
-    <div style={{ maxWidth: '800px', padding: '0 1rem' }}>
-      <h2>Poptávka pomoci</h2>
-      {seekHelpPosts.length === 0 ? (
-        <p style={{ color: '#6b7280', marginTop: '1rem' }}>
-          Zatím zde nejsou žádné poptávky pomoci.
-        </p>
-      ) : (
-        <div style={{ marginTop: '1.5rem' }}>
-          {seekHelpPosts.map((post) => (
-            <PostCard key={post.postId} post={post} />
-          ))}
-        </div>
-      )}
+    <div style={{ padding: '0 1rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>Poptávka pomoci</h2>
+        <button 
+          onClick={() => navigate('/pridat-prispevek')}
+          style={{ backgroundColor: '#10b981', color: 'white', padding: '0.5rem 1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600 }}
+        >
+          + Přidat příspěvek
+        </button>
+      </div>
+      <PostList posts={seekHelpPosts} emptyMessage="Zatím zde nejsou žádné poptávky pomoci." />
     </div>
   );
 }

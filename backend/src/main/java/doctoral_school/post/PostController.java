@@ -1,9 +1,6 @@
 package doctoral_school.post;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,10 @@ public class PostController {
     @GetMapping("/{id}")
     public Post getPostById(@PathVariable Long id){
         return postService.getPostById(id);
+    }
+
+    @PostMapping
+    public Post addPost(@RequestBody Post post){
+        return postService.addPost(post);
     }
 }

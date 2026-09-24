@@ -1,0 +1,37 @@
+.post-row-wrapper {
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.post-row-wrapper:hover {
+  background-color: #e5e7eb;
+}
+
+.post-row-wrapper:last-child {
+  border-bottom: none;
+}
+
+.row-even {
+  background-color: #f3f4f6; /* Light gray like in the image */
+}
+
+.row-odd {
+  background-color: #ffffff; /* White */
+}
+
+.post-row-main {
+  display: flex;
+  padding: 0.75rem 1rem;
+  align-items: center;
+}
+
+.row-title {
+  font-weight: 500;
+  color: #111827;
+}
+
+/* On hover, maybe underline title? */
+.post-row-wrapper:hover .row-title {
+  text-decoration: underline;
+}
+

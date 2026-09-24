@@ -20,4 +20,8 @@ public class PostService {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Příspěvek nebyl nalezen"));
     }
+
+    public Post addPost(Post post) {
+        return postRepository.save(post);
+    }
 }
