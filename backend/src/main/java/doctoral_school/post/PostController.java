@@ -1,5 +1,6 @@
 package doctoral_school.post;
 
+import doctoral_school.post.dto.v1.PostDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,17 +16,17 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts(){
-        return postService.getAllPosts();
+    public List<PostDTO> getAllPosts(){
+        return postService.getAllPostsDTO();
     }
 
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable Long id){
-        return postService.getPostById(id);
+    public PostDTO getPostById(@PathVariable Long id){
+        return postService.getPostDTOById(id);
     }
 
     @PostMapping
-    public Post addPost(@RequestBody Post post){
-        return postService.addPost(post);
+    public PostDTO addPost(@RequestBody PostDTO postDTO){
+        return postService.addPost(postDTO);
     }
 }

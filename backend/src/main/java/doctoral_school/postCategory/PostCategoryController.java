@@ -1,5 +1,6 @@
 package doctoral_school.postCategory;
 
+import doctoral_school.postCategory.dto.v1.PostCategoryDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +11,14 @@ import java.util.List;
 @RequestMapping("/Categories")
 public class PostCategoryController {
 
-    private PostCategoryRepository postCategoryRepository;
+    private PostCategoryService postCategoryService;
 
-    public PostCategoryController(PostCategoryRepository postCategoryRepository) {
-        this.postCategoryRepository = postCategoryRepository;
+    public PostCategoryController(PostCategoryService postCategoryService) {
+        this.postCategoryService = postCategoryService;
     }
 
     @GetMapping
-    public List<PostCategory> getAllCategories(){
-        return postCategoryRepository.findAll();
+    public List<PostCategoryDTO> getAllCategories(){
+        return postCategoryService.getAllPostCategoriesDTO();
     }
 }
