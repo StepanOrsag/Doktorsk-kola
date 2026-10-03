@@ -7,6 +7,7 @@ import { SeekHelpPage } from './pages/SeekHelpPage';
 import { CollaborationPage } from './pages/CollaborationPage';
 import { PostDetailPage } from './pages/PostDetailPage';
 import { CreatePostPage } from './pages/CreatePostPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/nabidka-spoluprace" element={<CollaborationPage />} />
               <Route path="/prispevek/:id" element={<PostDetailPage />} />
               <Route path="/pridat-prispevek" element={<CreatePostPage />} />
+              <Route path="/profil" element={<ProfilePage />} />
             </Routes>
           </main>
         </div>

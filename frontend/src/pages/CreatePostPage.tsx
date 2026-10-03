@@ -9,7 +9,7 @@ export function CreatePostPage() {
   const { categories, loading: catsLoading } = useCategories();
 
   const [name, setName] = useState('');
-  const [postType, setPostType] = useState<PostType>('OFFERHELP');
+  const [postType, setPostType] = useState<PostType>('SEEKHELP');
   const [description, setDescription] = useState('');
   const [paymentType, setPaymentType] = useState<PaymentType>('FREE');
   const [categoryId, setCategoryId] = useState<number | ''>('');

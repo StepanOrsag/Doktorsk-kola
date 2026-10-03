@@ -30,6 +30,12 @@ export function Sidebar() {
         >
           Nabídka spolupráce
         </NavLink>
+        <NavLink
+          to="/profil"
+          className={({ isActive }) => isActive ? 'sidebar-link active' : 'sidebar-link'}
+        >
+          Profil  
+        </NavLink>
       </nav>
     </aside>
   );
