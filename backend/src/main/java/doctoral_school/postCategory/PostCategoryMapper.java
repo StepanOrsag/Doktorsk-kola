@@ -1,10 +1,8 @@
 package doctoral_school.postCategory;
 
 import doctoral_school.postCategory.dto.v1.PostCategoryDTO;
-import org.jspecify.annotations.NullMarked;
 import org.springframework.stereotype.Component;
 
-@NullMarked
 @Component
 public class PostCategoryMapper {
     public PostCategoryDTO toPostCategoryDTO(PostCategory postCategory) {

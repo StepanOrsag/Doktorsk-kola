@@ -1,7 +1,7 @@
 package doctoral_school.Auth;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.*;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -13,7 +13,7 @@ public class JwtService {
     private static final String SECRET_STRING = "MojeSuperTajneHesloProDoktorskouSkoluKtereMaDostatekZnaku123456";
     private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET_STRING.getBytes(StandardCharsets.UTF_8));
 
-    private static final long EXPIRATION_TIME = 1000*60*60*24;
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 24 hodin
 
     public String generateToken(String email, Long userId){
         Date now = new Date();
@@ -24,7 +24,7 @@ public class JwtService {
                 .claim("userId", userId)
                 .issuedAt(now)
                 .expiration(expiryDate)
-                .signWith(secretKey)
+                .signWith(secretKey, Jwts.SIG.HS256)
                 .compact();
     }
 }

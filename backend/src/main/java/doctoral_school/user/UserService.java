@@ -32,12 +32,16 @@ public class UserService {
 
     @Transactional
     public void registration(UserRegistrationDTO userRegistrationDTO) {
+        if(userRegistrationDTO.getEmail() == null || userRegistrationDTO.getPassword() == null) {
+            throw new IllegalArgumentException("E-mail i heslo musí být vyplněny");
+        }
+
         String email = userRegistrationDTO.getEmail().toLowerCase();
 
-        if(email == null || !(email.endsWith("@uhk.cz") || email.endsWith("@upce.cz"))){
+        if(!(email.endsWith("@uhk.cz") || email.endsWith("@upce.cz"))){
             throw new IllegalArgumentException("Registrace je povolena pouze pro e-maily z domén @uhk.cz nebo @upce.cz");
         }
-        if(userRepository.existsByEmail(userRegistrationDTO.getEmail())){
+        if(userRepository.existsByEmail(email)){
            throw new IllegalArgumentException("Tento e-mail je již zaregistrován");
         }
         User user = new User();

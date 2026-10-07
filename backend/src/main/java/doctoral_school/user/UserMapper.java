@@ -1,10 +1,8 @@
 package doctoral_school.user;
 
 import doctoral_school.user.dto.v1.UserDTO;
-import org.jspecify.annotations.NullMarked;
 import org.springframework.stereotype.Component;
 
-@NullMarked
 @Component
 public class UserMapper {
 
