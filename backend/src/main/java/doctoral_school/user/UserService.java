@@ -32,7 +32,7 @@ public class UserService {
 
     @Transactional
     public void registration(UserRegistrationDTO userRegistrationDTO) {
-        String email = userRegistrationDTO.getEmail();
+        String email = userRegistrationDTO.getEmail().toLowerCase();
 
         if(email == null || !(email.endsWith("@uhk.cz") || email.endsWith("@upce.cz"))){
             throw new IllegalArgumentException("Registrace je povolena pouze pro e-maily z domén @uhk.cz nebo @upce.cz");
@@ -41,13 +41,14 @@ public class UserService {
            throw new IllegalArgumentException("Tento e-mail je již zaregistrován");
         }
         User user = new User();
-        user.setEmail(userRegistrationDTO.getEmail());
+        user.setEmail(email);
         user.setPasswordHash(passwordHashingService.hash(userRegistrationDTO.getPassword()));
 
         userRepository.save(user);
     }
 
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        loginRequestDTO.setEmail(loginRequestDTO.getEmail().toLowerCase());
         User user = userRepository.findByEmail(loginRequestDTO.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Nesprávný e-mail nebo heslo"));
 
