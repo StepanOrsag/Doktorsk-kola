@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/Posts/**", "/Categories/**", "/Users/register").permitAll()
+                        .requestMatchers("/Posts/**", "/Categories/**", "/users/register", "/users/login").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

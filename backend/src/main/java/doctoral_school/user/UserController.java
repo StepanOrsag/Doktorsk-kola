@@ -1,29 +1,34 @@
 package doctoral_school.user;
 
-import doctoral_school.user.dto.v1.UserDTO;
-import doctoral_school.user.dto.v1.UserRegistrationDTO;
+import doctoral_school.user.dto.v1.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Users")
+@RequestMapping("/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserByID(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserDTO> getUserByID(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
         userService.registration(userRegistrationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Registrace proběhla úspěšně");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO){
+        AuthResponseDTO response = userService.login(loginRequestDTO);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
