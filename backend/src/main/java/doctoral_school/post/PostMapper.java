@@ -24,8 +24,8 @@ public class PostMapper {
                 post.getDescription(),
                 post.getPaymentType(),
                 categoryDTO,
-                post.getEmail(),
-                post.getPhone()
+                post.getUser() != null ? post.getUser().getEmail() : null,
+                post.getUser() != null ?post.getUser().getTelephone() :null
         );
     }
 }

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/Categories': 'http://localhost:8080',
+      '/categories': 'http://localhost:8080',
       '/Posts': 'http://localhost:8080',
       '/users': 'http://localhost:8080',
     },

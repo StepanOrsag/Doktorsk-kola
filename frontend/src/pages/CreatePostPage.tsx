@@ -13,9 +13,6 @@ export function CreatePostPage() {
   const [description, setDescription] = useState('');
   const [paymentType, setPaymentType] = useState<PaymentType>('FREE');
   const [categoryId, setCategoryId] = useState<number | ''>('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,9 +32,7 @@ export function CreatePostPage() {
         postType,
         description,
         paymentType,
-        category: { postCategoryId: Number(categoryId), name: '', isDefault: false }, // Backend usually only needs the ID
-        email,
-        phone,
+        category: { postCategoryId: Number(categoryId), name: '', isDefault: false },
       });
       if (postType === 'OFFERHELP') navigate('/nabidka-pomoci');
       else if (postType === 'SEEKHELP') navigate('/poptavka-pomoci');
@@ -125,30 +120,6 @@ export function CreatePostPage() {
             onChange={(e) => setDescription(e.target.value)}
             style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #d1d5db', fontFamily: 'inherit' }}
           />
-        </div>
-
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
-            <label htmlFor="email" style={{ fontWeight: 600 }}>E-mail</label>
-            <input 
-              id="email" 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #d1d5db' }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
-            <label htmlFor="phone" style={{ fontWeight: 600 }}>Telefon</label>
-            <input 
-              id="phone" 
-              type="tel" 
-              value={phone} 
-              onChange={(e) => setPhone(e.target.value)} 
-              style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #d1d5db' }}
-            />
-          </div>
         </div>
 
         <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>

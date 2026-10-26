@@ -2,6 +2,8 @@ package doctoral_school.post;
 
 import doctoral_school.postCategory.PostCategory;
 import doctoral_school.postCategory.PostCategoryRepository;
+import doctoral_school.user.User;
+import doctoral_school.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +15,8 @@ import java.util.List;
 public class PostInitializer {
 
     @Bean
-    @Order(2)
-    CommandLineRunner initPosts(PostRepository postRepository, PostCategoryRepository categoryRepository) {
+    @Order(3)
+    CommandLineRunner initPosts(PostRepository postRepository, PostCategoryRepository categoryRepository, UserRepository userRepository) {
         return args -> {
             if (postRepository.count() == 0) {
                 PostCategory programming = categoryRepository.findAll().stream()
@@ -32,6 +34,8 @@ public class PostInitializer {
                         .findFirst()
                         .orElse(null);
 
+                User testUser = userRepository.findAll().stream().findFirst().orElse(null);
+
                 postRepository.saveAll(List.of(
                         new Post(
                                 null,
@@ -40,8 +44,7 @@ public class PostInitializer {
                                 "Hledám pomoc s programovacím jazykem Java pro komerční účely.",
                                 PaymentType.FREE,
                                 programming,
-                                "pepa@gmail.com",
-                                "603291311"
+                                testUser
                         ),
 
                         new Post(
@@ -51,8 +54,7 @@ public class PostInitializer {
                                 "Nabízím odbornou pomoc s angličtinou, němčinou a japonštinou",
                                 PaymentType.PAID,
                                 languages,
-                                "franta@uhk.cz",
-                                "732789384"
+                                testUser
                         ),
 
                         new Post(
@@ -62,8 +64,7 @@ public class PostInitializer {
                                 "Hledám kolegu na spolupráci při hodnocení rychlosti algoritmů v různých systémech",
                                 PaymentType.AGREEMENT,
                                 metodology,
-                                "lubos@uhk.cz",
-                                "334678987"
+                                testUser
                         )
                 ));
             }

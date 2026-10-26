@@ -3,10 +3,11 @@ package doctoral_school.post;
 import doctoral_school.post.dto.v1.PostDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Posts")
+@RequestMapping("/posts")
 public class PostController {
 
     private PostService postService;
@@ -26,7 +27,7 @@ public class PostController {
     }
 
     @PostMapping
-    public PostDTO addPost(@RequestBody PostDTO postDTO){
-        return postService.addPost(postDTO);
+    public PostDTO addPost(@RequestBody PostDTO postDTO, Principal principal){
+        return postService.addPost(postDTO, principal.getName());
     }
 }
