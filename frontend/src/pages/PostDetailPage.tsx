@@ -1,31 +1,62 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { usePost } from '../hooks/usePost';
 import { formatPaymentType } from '../utils/formatters';
+import { useAuth } from '../context/AuthContext';
+import { deletePost } from '../api/postApi';
 
 export function PostDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { post, loading, error } = usePost(id);
+  const { email: currentUserEmail } = useAuth();
 
   if (loading) return <p style={{ textAlign: 'center' }}>Načítám detail příspěvku...</p>;
   if (error || !post) return <p style={{ color: 'red', textAlign: 'center' }}>Chyba: nepodařilo se načíst příspěvek.</p>;
+
+  const isAuthor = !!(currentUserEmail && post.email && currentUserEmail.toLowerCase() === post.email.toLowerCase());
+
+  const handleDelete = async () => {
+    if (!window.confirm('Opravdu si přejete tento příspěvek smazat?')) {
+      return;
+    }
+
+    try {
+      await deletePost(post.postId);
+      navigate(-1);
+    } catch (err: any) {
+      alert(err.message || 'Nepodařilo se smazat příspěvek.')
+    }
+  };
 
   return (
     <div style={{ maxWidth: '800px', padding: '0 1rem' }}>
       <button 
         onClick={() => navigate(-1)} 
-        style={{ 
-          marginBottom: '2rem', 
-          background: 'none', 
-          border: 'none', 
-          color: '#1d4ed8', 
-          cursor: 'pointer', 
-        }}
+        style={{ marginBottom: '2rem', background: 'none', border: 'none', color: '#1d4ed8', cursor: 'pointer' }}
       >
         &larr; Zpět
       </button>
-
-      <h2>{post.name}</h2>
+   
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
+        <h2>{post.name}</h2>
+              
+        {isAuthor && (
+          <button
+            onClick={handleDelete}
+            style={{
+              backgroundColor: '#ef4444',
+              color: 'white',
+              border: 'none',
+              padding: '0.5rem 1rem',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontWeight: 600,
+            }}
+          >
+            Smazat příspěvek
+          </button>
+        )}
+      </div>
       
       <div style={{ margin: '1rem 0', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         <span style={{ backgroundColor: '#eff6ff', color: '#1d4ed8', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '0.875rem', fontWeight: 500 }}>

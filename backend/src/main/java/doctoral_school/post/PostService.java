@@ -5,6 +5,7 @@ import doctoral_school.postCategory.PostCategory;
 import doctoral_school.user.User;
 import doctoral_school.user.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class PostService {
         return convertToDTO(post);
     }
 
+    @Transactional
     public PostDTO addPost(PostDTO postDTO, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new IllegalArgumentException("Uživatel neexistuje"));
@@ -54,5 +56,19 @@ public class PostService {
 
         Post newPost = postRepository.save(post);
         return convertToDTO(newPost);
+    }
+
+    @Transactional
+    public void deletePost(Long postId, String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("Tento uživatel neexistuje"));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Tento příspěvek neexistuje"));
+
+        if(!user.getUserId().equals(post.getUser().getUserId())) {
+            throw new RuntimeException("Příspěvek může smazat jen autor");
+        }
+
+        postRepository.delete(post);
     }
 }

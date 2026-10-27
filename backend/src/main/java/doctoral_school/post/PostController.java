@@ -1,6 +1,7 @@
 package doctoral_school.post;
 
 import doctoral_school.post.dto.v1.PostDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -29,5 +30,11 @@ public class PostController {
     @PostMapping
     public PostDTO addPost(@RequestBody PostDTO postDTO, Principal principal){
         return postService.addPost(postDTO, principal.getName());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id, Principal principal){
+        postService.deletePost(id, principal.getName());
+        return ResponseEntity.noContent().build();
     }
 }
