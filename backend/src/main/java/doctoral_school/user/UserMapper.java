@@ -8,6 +8,8 @@ public class UserMapper {
 
     public UserDTO toUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
         userDTO.setEmail(user.getEmail());
         userDTO.setTelephone(user.getTelephone());
         return userDTO;

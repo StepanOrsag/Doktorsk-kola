@@ -31,6 +31,6 @@ public class User {
     @Column(name="email", nullable = false, unique = true)
     private String email;
 
-    @Column(name="telephone", nullable = true, unique = true)
+    @Column(name="telephone", unique = true)
     private String telephone;
 }

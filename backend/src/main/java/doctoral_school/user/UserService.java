@@ -71,10 +71,15 @@ public class UserService {
 
     @Transactional
     public void updateUser(Long id, UserDTO userDTO) {
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Uživatel nenalezen."));
         if(!user.getEmail().equals(userDTO.getEmail())){
             throw new IllegalArgumentException("Email změnit nelze");
         }
+
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setTelephone(userDTO.getTelephone());
 
         userRepository.save(user);
     }

@@ -4,13 +4,31 @@ import type { LoginPayLoad } from '../types/user';
 import type { AuthResponse } from '../types/user';
 
 export async function fetchUser(userId: string | number): Promise<User> {
-    const response = await fetch(`/users/${userId}`);
+    const token = localStorage.getItem('jwt_token');
+    const response = await fetch(`/users/${userId}`, {
+      headers: {
+        ...(token ? { Authorization : `Bearer ${token} `} : {}),
+      },
+    });
 
   if (!response.ok) {
     throw new Error('Chyba při načítání uživatele.');
   }
 
   return response.json();
+}
+
+export async function updateUser(userId: string | number, userData: Partial<User>): Promise<void> {
+  const token = localStorage.getItem('jwt_token');
+  const response = await fetch(`/users/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(userData),
+  });
+  if(!response.ok) throw new Error('Chyba při aktualizaci profilu')
 }
 
 export async function registerUser(payload: UserRegistrationPayload): Promise<string> {
