@@ -13,12 +13,21 @@ export function PostList({ posts, emptyMessage }: PostListProps) {
   const { categories } = useCategories();
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedPayment, setSelectedPayment] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
   const filteredPosts = posts.filter((post) => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+    const matchesSearch =
+      !normalizedSearch ||
+      post.name.toLowerCase().includes(normalizedSearch) ||
+      post.description.toLowerCase().includes(normalizedSearch);
+
     const matchesCategory =
       !selectedCategory || post.category?.postCategoryId === Number(selectedCategory);
     const matchesPayment =
       !selectedPayment || post.paymentType === selectedPayment;
-    return matchesCategory && matchesPayment;
+
+    return matchesSearch && matchesCategory && matchesPayment;
   });
   return (
     <div style={{ marginTop: '1.5rem' }}>
@@ -37,6 +46,21 @@ export function PostList({ posts, emptyMessage }: PostListProps) {
         }}
       >
         <span style={{ fontWeight: 600, fontSize: '0.9rem', color: '#374151' }}>Filtrovat:</span>
+
+        <input
+          type="text"
+          placeholder="Hledat v příspěvcích..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            padding: '0.4rem 0.8rem',
+            borderRadius: '4px',
+            border: '1px solid #d1d5db',
+            fontSize: '0.9rem',
+            minWidth: '220px',
+            backgroundColor: 'white',
+          }}
+        />
 
         <select
           value={selectedCategory}
@@ -76,11 +100,12 @@ export function PostList({ posts, emptyMessage }: PostListProps) {
           <option value="AGREEMENT">Dohodou</option>
         </select>
       
-        {(selectedCategory || selectedPayment) && (
+        {(selectedCategory || selectedPayment || searchTerm) && (
           <button
             onClick={() => {
               setSelectedCategory('');
               setSelectedPayment('');
+              setSearchTerm('');
             }}
             style={{
               padding: '0.4rem 0.75rem',
